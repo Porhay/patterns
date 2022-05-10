@@ -1,0 +1,20 @@
+{
+  "name": "js-patterns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node factory.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Porhay/js-patterns.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Porhay/js-patterns/issues"
+  },
+  "homepage": "https://github.com/Porhay/js-patterns#readme"
+}
