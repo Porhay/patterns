@@ -1,20 +1,13 @@
 {
-  "name": "js-patterns",
+  "name": "patterns",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node factory.js"
+    "factory": "npx ts-node src/factory.ts",
+    "binaryTree": "npx ts-node src/binaryTree.ts",
+    "miscellaneous": "npx ts-node src/miscellaneous.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Porhay/js-patterns.git"
-  },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Porhay/js-patterns/issues"
-  },
-  "homepage": "https://github.com/Porhay/js-patterns#readme"
+  "license": "MIT"
 }
