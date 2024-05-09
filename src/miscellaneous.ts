@@ -10,8 +10,10 @@ console.log(exist_1, exist_2, exist_3);
 
 
 /**
- * TASK 2: 
+ * TASK 2: Implement object prototype delay
  */
+
+
 
 
 /**

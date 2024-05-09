@@ -2,11 +2,12 @@
   "name": "patterns",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/miscellaneous.ts",
   "scripts": {
     "factory": "npx ts-node src/factory.ts",
     "binaryTree": "npx ts-node src/binaryTree.ts",
-    "miscellaneous": "npx ts-node src/miscellaneous.ts"
+    "miscellaneous": "npx ts-node src/miscellaneous.ts",
+    "generics": "npx ts-node src/generics.ts"
   },
   "author": "",
   "license": "MIT"

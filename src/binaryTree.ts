@@ -1,7 +1,7 @@
 
 
 /**
- * BINARY TREE
+ * BINARY TREE [data structure]
  * Task: sum all the values from every level of concern
  */
 
