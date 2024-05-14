@@ -95,10 +95,59 @@ export function findUniq(arr: number[]): any {
  *               ^--^       3 + 7 = 10
  * Result: [3, 7]
  */
-export function sumPairs(ints: number[], s: number): [number, number] | void {
+export function sumPairs(arr: number[], sum: number): number[] | undefined {
+    /**
+     * O(n^2) algorithm complexity
+     * @returns number[] | undefined
+     */
+    const _firstSolution = () => {
+        // generate all possible results
+        let possibleResults: number[][] = [], jIndexes: number[] = []
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = i + 1; j < arr.length; j++) {
+                let result = arr[i] + arr[j] === sum ? [arr[i], arr[j]] : undefined
+                if (result !== undefined && i === j) continue
+                if (result !== undefined) {
+                    possibleResults.push(result)
+                    jIndexes.push(j)
+                }
+            }
+        }
 
-    return [1, 1]
+        // check which result has nearest to the left side second param (as required)
+        if (possibleResults.length < 1) {
+            return undefined
+        } else if (possibleResults.length === 1) {
+            return possibleResults[0]
+        } else {
+            const leftNearest = jIndexes.indexOf(Math.min(...jIndexes))
+            return possibleResults[leftNearest]
+        }
+    }
+
+    /**
+     * O(n) algorithm complexity
+     * @returns number[] | undefined
+     */
+    const _secondSolution = () => {
+        const seen = new Map();
+        for (let i = 0; i < arr.length; i++) {
+            const complement = sum - arr[i];
+            if (seen.has(complement)) {
+                return [complement, arr[i]];
+            }
+            seen.set(arr[i], i);
+        }
+        return undefined;
+    }
+
+    return _secondSolution()
 }
+
+/**
+ * TASK 7:
+ * Result:
+ */
 
 
 // --->   RUN TASKS   <---
@@ -107,4 +156,4 @@ objPrototypeDelay()                 // TASK 2
 devider([1, 2, 3, 4, 5], 2)         // TASK 3
 order("is2 Thi1s T4est 3a")         // TASK 4
 findUniq([0, 0, 0.55, 0, 0])        // TASK 5
-sumPairs([1, 4, 8, 7, 3, 15], 8)    // TASK 5
+sumPairs([10, 5, 2, 3, 7, 5], 10);  // TASK 6
