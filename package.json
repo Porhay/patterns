@@ -9,6 +9,10 @@
     "miscellaneous": "npx ts-node src/miscellaneous.ts",
     "generics": "npx ts-node src/generics.ts"
   },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
   "author": "",
   "license": "MIT"
 }
