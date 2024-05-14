@@ -50,25 +50,13 @@ const devider = (arr: number[], numberOfElems: number) => {
  * Example: 'is2 Thi1s T4est 3a' -> 'Thi1s is2 3a T4est'
  */
 export function order(words: string): string {
-    let orderList: { word: string; orderIndex: any }[] = []
-
-    // extract indexes from words
     const wordList: string[] = words.split(' ')
+    const orderList: string[] = new Array(wordList.length)
     wordList.forEach((word: string) => {
-        const orderIndex = word.split('').find(_ => !Number.isNaN(parseInt(_)))
-        orderList.push({ word, orderIndex })
+        const orderIndex: any = word.split('').find(_ => !Number.isNaN(parseInt(_)))
+        orderList[orderIndex - 1] = word
     })
-
-    // sort by index
-    orderList = orderList.sort((a: any, b: any) => a.orderIndex.localeCompare(b.orderIndex));
-
-    // compose string array
-    const orderedList: string[] = []
-    orderList.forEach(obj => {
-        orderedList.push(obj.word)
-    })
-
-    return orderedList.join(' ')
+    return orderList.join(' ')
 }
 
 /**
@@ -145,15 +133,36 @@ export function sumPairs(arr: number[], sum: number): number[] | undefined {
 }
 
 /**
- * TASK 7:
- * Result:
+ * TASK 7: Assume that <n> people are put into a circle and that they are eliminated in steps of <step> elements
+ * n=7, step=3 => means 7 people in a circle one every 3 is eliminated until one remains
+ * Example: [1,2,3,4,5,6,7] -> [1,2,4,5,6,7] -> [1,2,4,5,7] -> [1,4,5,7] -> [1,4,5] -> [1,4] -> [4]
+ */
+export function josephusSurvivor(n: number, step: number) {
+    const filled = Array.from({ length: n }, (value, index) => index + 1);
+
+    let index = step - 1
+    while (filled.length !== 1) {
+        if (filled[index]) {
+            filled.splice(index, 1) // remove item
+            index = index + step - 1
+        } else {
+            index = Math.abs(filled.length - index)
+        }
+    }
+    return filled[0]
+}
+
+/**
+ * TASK 8:
+ * Example:
  */
 
 
 // --->   RUN TASKS   <---
-checkExist()                        // TASK 1
-objPrototypeDelay()                 // TASK 2
-devider([1, 2, 3, 4, 5], 2)         // TASK 3
-order("is2 Thi1s T4est 3a")         // TASK 4
-findUniq([0, 0, 0.55, 0, 0])        // TASK 5
-sumPairs([10, 5, 2, 3, 7, 5], 10);  // TASK 6
+checkExist()                            // TASK 1
+objPrototypeDelay()                     // TASK 2
+devider([1, 2, 3, 4, 5], 2)             // TASK 3
+order("is2 Thi1s T4est 3a")             // TASK 4
+findUniq([0, 0, 0.55, 0, 0])            // TASK 5
+sumPairs([10, 5, 2, 3, 7, 5], 10);      // TASK 6
+josephusSurvivor(11, 19);               // TASK 7
