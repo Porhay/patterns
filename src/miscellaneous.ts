@@ -153,10 +153,36 @@ export function josephusSurvivor(n: number, step: number) {
 }
 
 /**
- * TASK 8:
- * Example:
+ * TASK 8: We are given an array <arr> of strings and an integer k. 
+ * Need to return the first longest string consisting of k consecutive strings taken in the array.
+ * Example: longestConsec(["zone", "abigail", "theta", "form", "libe", "zas"], 2) => "abigailtheta"
  */
+export function longestConsec(arr: string[], k: number): string {
+    const concatenated = []
+    for (let i = 0; i <= arr.length - k; i++) {
+        let res = arr[i]
+        for (let j = 1; j < k; j++) {
+            res = res.concat(arr[i + j])
+        }
+        concatenated.push(res)
+    }
 
+    if (concatenated.length === 0) {
+        return ''
+    }
+
+    try {
+        const calcSizes = concatenated.map((e) => e.length)
+        const maxIndex = calcSizes.indexOf(Math.max(...calcSizes))        
+        return concatenated[maxIndex]
+    } catch (error) {
+        return ''
+    }
+}
+
+
+// TASK DATA
+const ARR_8 = ["it", "wkppv", "ixoyx", "3452", "zzzzzzzzzzzz"]
 
 // --->   RUN TASKS   <---
 checkExist()                            // TASK 1
@@ -166,3 +192,4 @@ order("is2 Thi1s T4est 3a")             // TASK 4
 findUniq([0, 0, 0.55, 0, 0])            // TASK 5
 sumPairs([10, 5, 2, 3, 7, 5], 10);      // TASK 6
 josephusSurvivor(11, 19);               // TASK 7
+longestConsec(ARR_8, 3);                // TASK 8
