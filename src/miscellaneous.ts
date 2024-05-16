@@ -20,11 +20,11 @@ const objPrototypeDelay = () => {
  * TASK 3: devide to sub arrays and tun it in paralel with 1 sec timeout
  */
 const devider = (arr: number[], numberOfElems: number) => {
-    const res = []
+    const res: number[][] = []
 
     let count = 0
     while (arr.length !== count) {
-        const subArr = []
+        const subArr: number[] = []
         for (let i = count; subArr.length < numberOfElems && arr[i]; i++) {
             subArr.push(arr[i])
             count = count + 1
@@ -158,7 +158,7 @@ export function josephusSurvivor(n: number, step: number) {
  * Example: longestConsec(["zone", "abigail", "theta", "form", "libe", "zas"], 2) => "abigailtheta"
  */
 export function longestConsec(arr: string[], k: number): string {
-    const concatenated = []
+    const concatenated: string[] = []
     for (let i = 0; i <= arr.length - k; i++) {
         let res = arr[i]
         for (let j = 1; j < k; j++) {
@@ -173,23 +173,57 @@ export function longestConsec(arr: string[], k: number): string {
 
     try {
         const calcSizes = concatenated.map((e) => e.length)
-        const maxIndex = calcSizes.indexOf(Math.max(...calcSizes))        
+        const maxIndex = calcSizes.indexOf(Math.max(...calcSizes))
         return concatenated[maxIndex]
     } catch (error) {
         return ''
     }
 }
 
+/**
+ * TASK 9: Check if braces have valid structure.
+ * Example: "(){}[]" => true, "([{}])" => true, "(}" => false, "[(])" => false
+ */
+export function validBraces(braces: string): boolean {
+    const brSymbols: { [key: string]: string } = {
+        '(': ')',
+        '[': ']',
+        '{': '}',
+    }
+    const openBraces = Object.keys(brSymbols)
+    const closeBraces = Object.values(brSymbols)
+
+    const stack: string[] = []
+    for (const brace of braces) {
+        if (openBraces.includes(brace)) {
+            stack.push(brace);
+        } else if (closeBraces.includes(brace)) {
+            const last: string | undefined = stack.pop()
+            if (!last || brSymbols[last] !== brace) {
+                return false
+            }
+        }
+    }
+
+    return stack.length === 0;
+}
+
+/**
+ * TASK 10:
+ * Example:
+ */
+
 
 // TASK DATA
 const ARR_8 = ["it", "wkppv", "ixoyx", "3452", "zzzzzzzzzzzz"]
 
 // --->   RUN TASKS   <---
-checkExist()                            // TASK 1
-objPrototypeDelay()                     // TASK 2
-devider([1, 2, 3, 4, 5], 2)             // TASK 3
-order("is2 Thi1s T4est 3a")             // TASK 4
-findUniq([0, 0, 0.55, 0, 0])            // TASK 5
+checkExist();                           // TASK 1
+objPrototypeDelay();                    // TASK 2
+devider([1, 2, 3, 4, 5], 2);            // TASK 3
+order("is2 Thi1s T4est 3a");            // TASK 4
+findUniq([0, 0, 0.55, 0, 0]);           // TASK 5
 sumPairs([10, 5, 2, 3, 7, 5], 10);      // TASK 6
 josephusSurvivor(11, 19);               // TASK 7
 longestConsec(ARR_8, 3);                // TASK 8
+validBraces('([{}])()');                // TASK 9
