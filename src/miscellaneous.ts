@@ -209,7 +209,91 @@ export function validBraces(braces: string): boolean {
 }
 
 /**
- * TASK 10:
+ * TASK 10: Make an wave array 
+ * Example: word => ["Word", "wOrd", "woRd", "worD"]
+ */
+export function wave(str: string): Array<string> {
+    const res: string[] = []
+    for (let i = 0; i < str.length; i++) {
+        const splited = str.split('')
+        if (splited[i] === ' ') continue
+        splited[i] = splited[i].toUpperCase()
+        res.push(splited.join(''))
+    }
+    return res;
+}
+
+/**
+ * TASK 11: There is an array of strings. All strings contains similar letters except one. Need to find it.
+ * Example: findUniq([ 'Aa', 'aaa', 'aaaaa', 'BbBb', 'Aaaa', 'AaAaAa', 'a' ]) === 'BbBb'
+ */
+export function findUniqStr(arr: string[]): string {
+    /**
+     * O(2*n^2) algorithm complexity
+     * @returns string
+     */
+    const _firstSolution = () => {
+        // remove similar letters, prepare to compare
+        const normalized: string[] = []
+        for (let i = 0; i < arr.length; i++) {
+            const splited = arr[i].split('')
+            const occurrences: { [key: string]: number } = {}
+            for (let j = 0; j < splited.length; j++) {
+                const str = splited[j].toLowerCase()
+                occurrences[str] = occurrences[str] ? occurrences[str] + 1 : 1
+            }
+            normalized.push(Object.keys(occurrences).sort().join(''))
+        }
+
+        // compare and find unique
+        let nonUnique: string = ''
+        for (let i = 0; i < normalized.length; i++) {
+            const iStr: string = normalized[i]
+            for (let j = i + 1; j < normalized.length; j++) {
+                const jStr: string = normalized[j]
+                const match = iStr === jStr
+                if (match) {
+                    nonUnique = normalized[i]
+                }
+            }
+        }
+        const uniqueIndex = normalized.findIndex(e => e !== nonUnique)
+        const res = arr[uniqueIndex]
+        return res;
+    }
+
+    /**
+    * O(2n) algorithm complexity
+    * @returns string
+    */
+    const _secondSolution = () => {
+        const normalizedMap: Map<string, number> = new Map();
+        const originalMap: Map<string, string> = new Map();
+
+        // Normalize strings and populate maps
+        for (const str of arr) {
+            const normalized = Array.from(new Set(str.toLowerCase().split('').sort())).join('');
+            normalizedMap.set(normalized, (normalizedMap.get(normalized) || 0) + 1);
+            if (!originalMap.has(normalized)) {
+                originalMap.set(normalized, str);
+            }
+        }
+
+        // Find the unique normalized string
+        for (const [key, count] of normalizedMap) {
+            if (count === 1) {
+                return originalMap.get(key) as string;
+            }
+        }
+
+        throw new Error('No unique string found');
+    }
+
+    return _secondSolution()
+}
+
+/**
+ * TASK 12:
  * Example:
  */
 
@@ -218,12 +302,14 @@ export function validBraces(braces: string): boolean {
 const ARR_8 = ["it", "wkppv", "ixoyx", "3452", "zzzzzzzzzzzz"]
 
 // --->   RUN TASKS   <---
-checkExist();                           // TASK 1
-objPrototypeDelay();                    // TASK 2
-devider([1, 2, 3, 4, 5], 2);            // TASK 3
-order("is2 Thi1s T4est 3a");            // TASK 4
-findUniq([0, 0, 0.55, 0, 0]);           // TASK 5
-sumPairs([10, 5, 2, 3, 7, 5], 10);      // TASK 6
-josephusSurvivor(11, 19);               // TASK 7
-longestConsec(ARR_8, 3);                // TASK 8
-validBraces('([{}])()');                // TASK 9
+checkExist();                               // TASK 1
+objPrototypeDelay();                        // TASK 2
+devider([1, 2, 3, 4, 5], 2);                // TASK 3
+order("is2 Thi1s T4est 3a");                // TASK 4
+findUniq([0, 0, 0.55, 0, 0]);               // TASK 5
+sumPairs([10, 5, 2, 3, 7, 5], 10);          // TASK 6
+josephusSurvivor(11, 19);                   // TASK 7
+longestConsec(ARR_8, 3);                    // TASK 8
+validBraces('([{}])()');                    // TASK 9
+wave("two words")                           // TASK 10
+findUniqStr(['abc', 'foo', 'bca', 'cba'])   // TASK 11
