@@ -321,8 +321,20 @@ export function findUniqStr(arr: string[]): string {
  * @param args 
  */
 function exampleFunction(...args: any[]) {
-    console.log('TASK 12: ', args);
+    console.log('TASK 12:', args);
 }
+
+/**
+ * TASK 13: delay as method for func
+ */
+const greetObj = {
+    name: 'Kiko',
+    delay(timeout: number) {
+        setTimeout(() => {
+            console.log('TASK 13:', this.name);
+        }, timeout);
+    }
+};
 
 /**
  * TASK 13:
@@ -346,3 +358,4 @@ validBraces('([{}])()');                    // TASK 9
 wave("two words")                           // TASK 10
 findUniqStr(['abc', 'foo', 'bca', 'cba'])   // TASK 11
 exampleFunction(1, 'hello', true);          // TASK 12
+greetObj.delay(2000);                       // TASK 13
