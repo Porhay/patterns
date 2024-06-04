@@ -12,37 +12,61 @@ const checkExist = () => {
 /**
  * TASK 2: Implement object prototype delay
  */
-const objPrototypeDelay = () => {
-    return 1
+declare global {
+    interface Function {
+        delay(this: Function, delayTime: number): (...args: any[]) => void;
+    }
 }
+Function.prototype.delay = function (this: Function, delayTime: number): (...args: any[]) => void {
+    const originalFunction = this;
+    return function (this: any, ...args: any[]) {
+        setTimeout(() => {
+            originalFunction.apply(this, args);
+        }, delayTime);
+    };
+};
+function greet(name: string) {
+    console.log(`TASK 2: Hello, ${name}!`);
+}
+const delayedGreet = greet.delay(1000);
 
 /**
  * TASK 3: devide to sub arrays and tun it in paralel with 1 sec timeout
  */
-const devider = (arr: number[], numberOfElems: number) => {
-    const res: number[][] = []
+const devider = <ArrayType>(arr: ArrayType[], numberOfElems: number): ArrayType[][] => {
+    /**
+     * O(n^2) algorithm complexity
+     */
+    const _firstSolution = () => {
+        const res: ArrayType[][] = []
 
-    let count = 0
-    while (arr.length !== count) {
-        const subArr: number[] = []
-        for (let i = count; subArr.length < numberOfElems && arr[i]; i++) {
-            subArr.push(arr[i])
-            count = count + 1
+        let count = 0
+        while (arr.length !== count) {
+            const subArr: ArrayType[] = []
+            for (let i = count; subArr.length < numberOfElems && arr[i]; i++) {
+                subArr.push(arr[i])
+                count = count + 1
+            }
+            res.push(subArr)
+
         }
-        res.push(subArr)
-
+        return res
     }
-    return res
+
+    /**
+     * O(n) algorithm complexity
+     */
+    const _secondSolution = () => {
+        const splitFiles: ArrayType[][] = []
+        for (let i = 0; i < arr.length; i += numberOfElems) {
+            splitFiles.push(arr.slice(i, i + numberOfElems));
+        }
+        return splitFiles
+    }
+
+    return _secondSolution()
 }
-// function async delay() {}
-// for () {
-// 	await delay()
-// }
-// const promise1 = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve('foo');
-//   }, 1000);
-// });
+
 
 
 /**
@@ -293,7 +317,15 @@ export function findUniqStr(arr: string[]): string {
 }
 
 /**
- * TASK 12:
+ * TASK 12: args is object that contains all the arguments passed to the function
+ * @param args 
+ */
+function exampleFunction(...args: any[]) {
+    console.log('TASK 12: ', args);
+}
+
+/**
+ * TASK 13:
  * Example:
  */
 
@@ -303,7 +335,7 @@ const ARR_8 = ["it", "wkppv", "ixoyx", "3452", "zzzzzzzzzzzz"]
 
 // --->   RUN TASKS   <---
 checkExist();                               // TASK 1
-objPrototypeDelay();                        // TASK 2
+delayedGreet('Kiko')                        // TASK 2
 devider([1, 2, 3, 4, 5], 2);                // TASK 3
 order("is2 Thi1s T4est 3a");                // TASK 4
 findUniq([0, 0, 0.55, 0, 0]);               // TASK 5
@@ -313,3 +345,4 @@ longestConsec(ARR_8, 3);                    // TASK 8
 validBraces('([{}])()');                    // TASK 9
 wave("two words")                           // TASK 10
 findUniqStr(['abc', 'foo', 'bca', 'cba'])   // TASK 11
+exampleFunction(1, 'hello', true);          // TASK 12
