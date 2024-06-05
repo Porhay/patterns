@@ -26,7 +26,7 @@ Function.prototype.delay = function (this: Function, delayTime: number): (...arg
     };
 };
 function greet(name: string) {
-    console.log(`TASK 2: Hello, ${name}!`);
+    return `TASK 2: Hello, ${name}!`;
 }
 const delayedGreet = greet.delay(1000);
 
@@ -321,7 +321,7 @@ export function findUniqStr(arr: string[]): string {
  * @param args 
  */
 function exampleFunction(...args: any[]) {
-    console.log('TASK 12:', args);
+    return `TASK 12: ${args}`;
 }
 
 /**
@@ -331,15 +331,59 @@ const greetObj = {
     name: 'Kiko',
     delay(timeout: number) {
         setTimeout(() => {
-            console.log('TASK 13:', this.name);
+            return `TASK 13: ${this.name}`;
         }, timeout);
     }
 };
 
 /**
- * TASK 13:
- * Example:
+ * TASK 14: Promise.all()
  */
+function fetchUserData(userId: number): Promise<{ id: number, name: string }> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const users = [
+                { id: 1, name: "John" },
+                { id: 2, name: "Alice" },
+                { id: 3, name: "Bob" }
+            ];
+
+            const user = users.find(user => user.id === userId);
+
+            if (user) {
+                resolve(user);
+                console.log("User Posts:", user);
+            } else {
+                reject(new Error("User not found"));
+            }
+        }, 1000);
+    });
+}
+function fetchUserPosts(userId: number): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const posts = [
+                "Post 1",
+                "Post 2",
+                "Post 3"
+            ];
+            resolve(posts);
+            console.log("User Data:", posts);
+        }, 1500);
+    });
+}
+function fetchUserDataAndPosts(userId: number) {
+    try {
+        // Run both promises concurrently and wait for all of them to resolve
+        // const [userData, userPosts] = await Promise.all([ ... ])
+        Promise.all([
+            fetchUserData(userId),
+            fetchUserPosts(userId)
+        ]);
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+    }
+}
 
 
 // TASK DATA
@@ -359,3 +403,4 @@ wave("two words")                           // TASK 10
 findUniqStr(['abc', 'foo', 'bca', 'cba'])   // TASK 11
 exampleFunction(1, 'hello', true);          // TASK 12
 greetObj.delay(2000);                       // TASK 13
+fetchUserDataAndPosts(2);                   // TASK 13
